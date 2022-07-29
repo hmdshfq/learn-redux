@@ -1,5 +1,25 @@
 /* REDUX DEMO */
 
+/***********************************************/
+/*
+  Redux Cycle
+  ===========
+  1. Action creator -> 2. Action -> 3. Dispatch -> 4. Reducers -> 5. State
+  - To change the state of an app we call an action creator
+  - The action creator function produces an action
+  - The action gets fed into the dispatch method
+  - The dispatch method feeds into our reducers the copies 
+    of our action object
+  - The reducers takes the action and previous data (state)
+    and modifies the data and returns it
+  - The returned data forms the new state
+
+  Redux Chronological Steps
+  =========================
+  1. Action creator -> 2. Action -> 3. Reducers -> 4. Dispatch -> 5. State
+*/
+/***********************************************/
+
 /* Clear the console */
 console.clear();
 
@@ -80,3 +100,45 @@ const policies = (oldListOfPolicies = [], action) => {
   }
   return oldListOfPolicies;
 };
+
+/**************/
+/* Add Redux */
+/*************/
+
+/* Extract createStore and combineReducers from Redux */
+const { createStore, combineReducers } = Redux;
+
+/* Combine reducers (departments) */
+const ourDeparments = combineReducers({
+  accounting,
+  claimsHistory,
+  policies,
+});
+
+/* Create a Redux store */
+const store = createStore(ourDeparments);
+
+/**************/
+/* Dispatcher */
+/**************/
+
+/* Initialize an action */
+// const action = createPolicy('Alex', 20);
+/* Log the action object */
+// console.log(action);
+
+/* Dispatch an action */
+// store.dispatch(action);
+store.dispatch(createPolicy('Alex', 20));
+store.dispatch(createPolicy('Jane', 40));
+store.dispatch(createPolicy('Jim', 20));
+store.dispatch(createPolicy('Bob', 30));
+
+store.dispatch(createClaim('Alex', 120));
+store.dispatch(createClaim('Jim', 50));
+
+store.dispatch(deletePolicy('Bob'));
+
+/***************************************/
+/* Log state after the action has commenced */
+console.log(store.getState());
